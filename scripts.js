@@ -125,23 +125,14 @@ customElements.define("book-preview", bookPreview);
 
 // Button element with preview information - image & info
 function createBookElement({ author, id, image, title }) {
-  const element = document.createElement("button");
-  element.classList = "preview";
-  element.setAttribute("data-preview", id);
+    const element = document.createElement("book-preview");
 
-  element.innerHTML = `
-        <img
-            class="preview__image"
-            src="${image}"
-        />
-        
-        <div class="preview__info">
-            <h3 class="preview__title">${title}</h3>
-            <div class="preview__author">${authors[author]}</div>
-        </div>
-    `;
+    element.setAttribute("author", author);
+    element.setAttribute("id", id);
+    element.setAttribute("image", image);
+    element.setAttribute("title", title);
 
-  return element;
+    return element;
 }
 
 // Function to create an option element
