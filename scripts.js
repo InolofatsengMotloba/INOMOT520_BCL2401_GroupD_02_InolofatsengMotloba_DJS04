@@ -121,6 +121,8 @@ function renderBooks(books) {
 
 renderBooks(matches.slice(0, BOOKS_PER_PAGE));
 
+customElements.define("book-preview", bookPreview);
+
 // Button element with preview information - image & info
 function createBookElement({ author, id, image, title }) {
   const element = document.createElement("button");
