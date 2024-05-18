@@ -1,34 +1,43 @@
+// Import necessary data from the data.js file
 import { books, authors, genres, BOOKS_PER_PAGE } from "./data.js";
 
 let page = 1;
 let matches = books;
 
+// Defines a custom HTML element 'bookPreview' which extends HTMLElement
 class bookPreview extends HTMLElement {
+  // Specify the attributes to observe for changes
   static get observedAttributes() {
     return ["author", "image", "id", "title"];
   }
 
+  // Constructor to set up the shadow DOM
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
   }
 
+  // Called when the element is added to the document
   connectedCallback() {
     this.render();
   }
 
+  // Called whenever one of the observed attributes changes
   attributeChangedCallback(name, oldValue, newValue) {
     if (oldValue !== newValue) {
       this.render();
     }
   }
 
+  // Render the custom element's content
   render() {
+    // Retrieve attributes from the element
     const author = this.getAttribute("author");
     const image = this.getAttribute("image");
     const id = this.getAttribute("id");
     const title = this.getAttribute("title");
 
+    // Create a template for the custom element
     const template = document.createElement("template");
     template.innerHTML = `
       <style>
@@ -103,6 +112,7 @@ class bookPreview extends HTMLElement {
         </div>
       </button>
     `;
+    // Clear the shadow root and append the template content
     this.shadowRoot.innerHTML = "";
     this.shadowRoot.appendChild(template.content.cloneNode(true));
   }
@@ -121,18 +131,22 @@ function renderBooks(books) {
 
 renderBooks(matches.slice(0, BOOKS_PER_PAGE));
 
+// Define the custom element so it can be used in the HTML
 customElements.define("book-preview", bookPreview);
 
 // Button element with preview information - image & info
 function createBookElement({ author, id, image, title }) {
-    const element = document.createElement("book-preview");
+  // Create a new custom element 'book-preview'
+  const element = document.createElement("book-preview");
 
-    element.setAttribute("author", author);
-    element.setAttribute("id", id);
-    element.setAttribute("image", image);
-    element.setAttribute("title", title);
+  // Set the attributes for the custom element
+  element.setAttribute("author", author);
+  element.setAttribute("id", id);
+  element.setAttribute("image", image);
+  element.setAttribute("title", title);
 
-    return element;
+  // Return the fully constructed button element
+  return element;
 }
 
 // Function to create an option element
@@ -285,7 +299,7 @@ document
 
     window.scrollTo({ top: 0, behavior: "smooth" });
     document.querySelector("[data-search-overlay]").open = false;
-});
+  });
 
 // Event listener for the search modal cancel button
 document.querySelector("[data-search-cancel]").addEventListener("click", () => {
@@ -297,7 +311,7 @@ document
   .querySelector("[data-settings-cancel]")
   .addEventListener("click", () => {
     document.querySelector("[data-settings-overlay]").open = false;
-});
+  });
 
 // Event listener for the search button
 document.querySelector("[data-header-search]").addEventListener("click", () => {
@@ -310,7 +324,7 @@ document
   .querySelector("[data-header-settings]")
   .addEventListener("click", () => {
     document.querySelector("[data-settings-overlay]").open = true;
-});
+  });
 
 // Event listener for the list close button
 document.querySelector("[data-list-close]").addEventListener("click", () => {
@@ -350,4 +364,4 @@ document
       document.querySelector("[data-list-description]").innerText =
         active.description;
     }
-});
+  });
